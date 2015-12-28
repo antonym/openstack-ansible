@@ -13,12 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: nova_compute_kvm.yml
-  when: nova_virt_type == 'kvm' or nova_virt_type == 'qemu'
+- name: Check for libvirt default network
+  shell: "virsh net-list | awk '/default/'"
+  register: default_net
+  tags:
+    - nova-xen
+    - nova-xen-virsh-net
 
-- include: nova_compute_xen.yml
-  when: nova_virt_type == 'xen'
+- name: Disable libvirt default network
+  command: "virsh net-autostart default --disable"
+  when: default_net.stdout|search('default')
+  tags:
+    - nova-xen
+    - nova-xen-virsh-net
 
-- include: nova_compute_key_populate.yml
-
-- include: nova_compute_key_distribute.yml
+- name: Destroy libvirt default network
+  command: "virsh net-destroy default"
+  when: default_net.stdout|search('default')
+  tags:
+    - nova-xen
+    - nova-xen-virsh-net

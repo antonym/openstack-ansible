@@ -66,6 +66,7 @@
       tags:
         - nova-kvm
         - nova-kvm-container-devices
+        - nova-xen
     - name: Add net/tun device to the compute
       shell: |
         lxc-device -n {{ container_name }} add /dev/net/tun /dev/net/tun
@@ -76,6 +77,7 @@
       tags:
         - nova-kvm
         - nova-kvm-container-devices
+        - nova-xen
     - name: Add kvm device to the compute
       shell: |
         lxc-device -n {{ container_name }} add /dev/kvm /dev/kvm
@@ -91,6 +93,7 @@
       tags:
         - nova-kvm
         - nova-kvm-container-devices
+        - nova-xen
     - name: Create log dir
       file:
         path: "{{ item.path }}"

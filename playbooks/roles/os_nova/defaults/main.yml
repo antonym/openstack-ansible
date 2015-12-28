@@ -61,7 +61,7 @@ nova_rpc_conn_pool_size: 30
 nova_rpc_response_timeout: 60
 
 ## Nova virtualization Type, set to KVM if supported
-# Current supported choice: qemu or kvm
+# Current supported choice: qemu, kvm, or xen
 # If this is not set, then the playbook will try to guess it.
 #nova_virt_type: kvm
 
@@ -291,6 +291,25 @@ nova_compute_kvm_apt_packages:
   - dosfstools
   - dosfstools-dbg
   - multipath-tools
+
+nova_compute_xen_apt_packages:
+  - bridge-utils
+  - dosfstools
+  - dosfstools-dbg
+  - genisoimage
+  - kpartx
+  - libvirt-bin
+  - multipath-tools
+  - nfs-common
+  - open-iscsi
+  - python-libguestfs
+  - python-libvirt
+  - qemu
+  - qemu-utils
+  - sysfsutils
+  - vlan
+  - xen-hypervisor-4.4-amd64
+  - xen-utils-4.4
 
 # nova packages that must be installed before anything else
 nova_requires_pip_packages:
